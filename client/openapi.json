@@ -1,0 +1,3511 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Iron Curtain Command Server",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/api/v1/auth/login": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Login",
+    "operationId": "login_api_v1_auth_login_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/LoginRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TokenPair"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/auth/refresh": {
+   "post": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Refresh",
+    "operationId": "refresh_api_v1_auth_refresh_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RefreshRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TokenPair"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/me": {
+   "get": {
+    "tags": [
+     "auth"
+    ],
+    "summary": "Me",
+    "operationId": "me_api_v1_me_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/clock": {
+   "get": {
+    "tags": [
+     "clock"
+    ],
+    "summary": "Clock",
+    "operationId": "clock_api_v1_clock_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ClockOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/config": {
+   "get": {
+    "tags": [
+     "clock"
+    ],
+    "summary": "Client Config",
+    "operationId": "client_config_api_v1_config_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ClientConfig"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/countries": {
+   "get": {
+    "tags": [
+     "teams"
+    ],
+    "summary": "Countries",
+    "operationId": "countries_api_v1_countries_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/Country"
+         },
+         "title": "Response Countries Api V1 Countries Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/teams/me/country": {
+   "post": {
+    "tags": [
+     "teams"
+    ],
+    "summary": "Claim Country",
+    "operationId": "claim_country_api_v1_teams_me_country_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ClaimRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TeamOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/teams": {
+   "get": {
+    "tags": [
+     "teams"
+    ],
+    "summary": "Teams",
+    "operationId": "teams_api_v1_teams_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/TeamOut"
+         },
+         "title": "Response Teams Api V1 Teams Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/rounds": {
+   "get": {
+    "tags": [
+     "rounds"
+    ],
+    "summary": "List Rounds",
+    "operationId": "list_rounds_api_v1_rounds_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/RoundOut"
+         },
+         "title": "Response List Rounds Api V1 Rounds Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/rounds/current": {
+   "get": {
+    "tags": [
+     "rounds"
+    ],
+    "summary": "Current",
+    "operationId": "current_api_v1_rounds_current_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "anyOf": [
+          {
+           "$ref": "#/components/schemas/RoundOut"
+          },
+          {
+           "type": "null"
+          }
+         ],
+         "title": "Response Current Api V1 Rounds Current Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/rounds/{round_id}/standings": {
+   "get": {
+    "tags": [
+     "rounds"
+    ],
+    "summary": "Standings",
+    "operationId": "standings_api_v1_rounds__round_id__standings_get",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/StandingOut"
+         },
+         "title": "Response Standings Api V1 Rounds  Round Id  Standings Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/rounds/{round_id}/matches": {
+   "get": {
+    "tags": [
+     "replays"
+    ],
+    "summary": "Round Matches",
+    "description": "All matches of a published round, or only your own while it is still in progress.",
+    "operationId": "round_matches_api_v1_rounds__round_id__matches_get",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/MatchOut"
+         },
+         "title": "Response Round Matches Api V1 Rounds  Round Id  Matches Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/matches/{match_id}/replay": {
+   "get": {
+    "tags": [
+     "replays"
+    ],
+    "summary": "Replay",
+    "operationId": "replay_api_v1_matches__match_id__replay_get",
+    "parameters": [
+     {
+      "name": "match_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Match Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReplayOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/submissions": {
+   "post": {
+    "tags": [
+     "submissions"
+    ],
+    "summary": "Submit",
+    "description": "Store a new version and queue its check. The result arrives as a submission.result event.\n\nBlock rules are checked immediately (422 BLOCK_RULES); the server compiles the modules itself.",
+    "operationId": "submit_api_v1_submissions_post",
+    "parameters": [
+     {
+      "name": "idempotency-key",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Idempotency-Key"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AgentIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "202": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SubmissionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "get": {
+    "tags": [
+     "submissions"
+    ],
+    "summary": "History",
+    "operationId": "history_api_v1_submissions_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/SubmissionOut"
+         },
+         "title": "Response History Api V1 Submissions Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/submissions/{submission_id}": {
+   "get": {
+    "tags": [
+     "submissions"
+    ],
+    "summary": "Get Submission",
+    "operationId": "get_submission_api_v1_submissions__submission_id__get",
+    "parameters": [
+     {
+      "name": "submission_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Submission Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SubmissionDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/practice/validate": {
+   "post": {
+    "tags": [
+     "practice"
+    ],
+    "summary": "Validate",
+    "description": "Build the agent under the current round's block rules: errors for the editor, and the\nPython generated from each block module for the preview.",
+    "operationId": "validate_api_v1_practice_validate_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AgentIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidateOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/practice/bots": {
+   "get": {
+    "tags": [
+     "practice"
+    ],
+    "summary": "Bots",
+    "operationId": "bots_api_v1_practice_bots_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/BuiltInBot"
+         },
+         "title": "Response Bots Api V1 Practice Bots Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/practice/simulate": {
+   "post": {
+    "tags": [
+     "practice"
+    ],
+    "summary": "Simulate",
+    "description": "Play a practice match in the sandbox against a built-in bot, or against a copy of yourself.",
+    "operationId": "simulate_api_v1_practice_simulate_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PracticeRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PracticeOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/fairplay/events": {
+   "post": {
+    "tags": [
+     "fairplay"
+    ],
+    "summary": "Report",
+    "description": "Batched reports from the client. They are signals for invigilators, not proof.",
+    "operationId": "report_api_v1_fairplay_events_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/FairplayBatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/rounds/{round_id}/window/open": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Open Window",
+    "operationId": "open_window_api_v1_admin_rounds__round_id__window_open_post",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/WindowOpen"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/rounds/{round_id}/rules": {
+   "put": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Update Rules",
+    "description": "Set how many block modules, how many blocks per module and which block categories teams may use.",
+    "operationId": "update_rules_api_v1_admin_rounds__round_id__rules_put",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/BlockRulesModel"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/rounds/{round_id}/window/extend": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Extend Window",
+    "operationId": "extend_window_api_v1_admin_rounds__round_id__window_extend_post",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/WindowExtend"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/rounds/{round_id}/window/pause": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Pause Window",
+    "operationId": "pause_window_api_v1_admin_rounds__round_id__window_pause_post",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/rounds/{round_id}/window/resume": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Resume Window",
+    "operationId": "resume_window_api_v1_admin_rounds__round_id__window_resume_post",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/rounds/{round_id}/window/close": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Close Window",
+    "operationId": "close_window_api_v1_admin_rounds__round_id__window_close_post",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/rounds/{round_id}/start": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Start Round",
+    "operationId": "start_round_api_v1_admin_rounds__round_id__start_post",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/rounds/{round_id}/review": {
+   "get": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Review",
+    "operationId": "review_api_v1_admin_rounds__round_id__review_get",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReviewOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/rounds/{round_id}/approve": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Approve",
+    "operationId": "approve_api_v1_admin_rounds__round_id__approve_post",
+    "parameters": [
+     {
+      "name": "round_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Round Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/matches/{match_id}/retry": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Retry Match",
+    "operationId": "retry_match_api_v1_admin_matches__match_id__retry_post",
+    "parameters": [
+     {
+      "name": "match_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Match Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/matches/{match_id}/reverify": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Reverify",
+    "operationId": "reverify_api_v1_admin_matches__match_id__reverify_post",
+    "parameters": [
+     {
+      "name": "match_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Match Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/teams/{team_id}/penalties": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Penalise",
+    "operationId": "penalise_api_v1_admin_teams__team_id__penalties_post",
+    "parameters": [
+     {
+      "name": "team_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Team Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PenaltyIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PenaltyOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/teams/{team_id}/revoke-sessions": {
+   "post": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Revoke Sessions",
+    "description": "Revoke every refresh token of a team, e.g. if its credentials leaked.",
+    "operationId": "revoke_sessions_api_v1_admin_teams__team_id__revoke_sessions_post",
+    "parameters": [
+     {
+      "name": "team_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Team Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/teams": {
+   "get": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Teams",
+    "operationId": "teams_api_v1_admin_teams_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/AdminTeamRow"
+         },
+         "title": "Response Teams Api V1 Admin Teams Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/admin/fairplay": {
+   "get": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Fairplay",
+    "operationId": "fairplay_api_v1_admin_fairplay_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/FairplayOut"
+         },
+         "title": "Response Fairplay Api V1 Admin Fairplay Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/healthz": {
+   "get": {
+    "tags": [
+     "health"
+    ],
+    "summary": "Healthz",
+    "operationId": "healthz_api_v1_healthz_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/readyz": {
+   "get": {
+    "tags": [
+     "health"
+    ],
+    "summary": "Readyz",
+    "operationId": "readyz_api_v1_readyz_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "AdminTeamRow": {
+    "properties": {
+     "team": {
+      "$ref": "#/components/schemas/TeamOut"
+     },
+     "usernames": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Usernames"
+     },
+     "latest_submission_id": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Latest Submission Id"
+     },
+     "latest_version": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Latest Version"
+     },
+     "latest_status": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Latest Status"
+     },
+     "accepted_version": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Accepted Version"
+     },
+     "fairplay_flags": {
+      "type": "integer",
+      "title": "Fairplay Flags"
+     }
+    },
+    "type": "object",
+    "required": [
+     "team",
+     "usernames",
+     "latest_submission_id",
+     "latest_version",
+     "latest_status",
+     "accepted_version",
+     "fairplay_flags"
+    ],
+    "title": "AdminTeamRow"
+   },
+   "AgentIn": {
+    "properties": {
+     "hand_code": {
+      "type": "string",
+      "maxLength": 50000,
+      "title": "Hand Code"
+     },
+     "modules": {
+      "items": {
+       "$ref": "#/components/schemas/ModuleIn"
+      },
+      "type": "array",
+      "maxItems": 10,
+      "title": "Modules",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "hand_code"
+    ],
+    "title": "AgentIn",
+    "description": "A team's agent: hand-written code (defining strategy) plus block modules."
+   },
+   "BlockRulesModel": {
+    "properties": {
+     "max_modules": {
+      "type": "integer",
+      "maximum": 10.0,
+      "minimum": 0.0,
+      "title": "Max Modules"
+     },
+     "max_blocks": {
+      "type": "integer",
+      "maximum": 200.0,
+      "minimum": 1.0,
+      "title": "Max Blocks"
+     },
+     "categories": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Categories"
+     }
+    },
+    "type": "object",
+    "required": [
+     "max_modules",
+     "max_blocks",
+     "categories"
+    ],
+    "title": "BlockRulesModel"
+   },
+   "BuiltInBot": {
+    "properties": {
+     "key": {
+      "type": "string",
+      "title": "Key"
+     },
+     "description": {
+      "type": "string",
+      "title": "Description"
+     }
+    },
+    "type": "object",
+    "required": [
+     "key",
+     "description"
+    ],
+    "title": "BuiltInBot"
+   },
+   "ClaimRequest": {
+    "properties": {
+     "code": {
+      "type": "string",
+      "title": "Code"
+     }
+    },
+    "type": "object",
+    "required": [
+     "code"
+    ],
+    "title": "ClaimRequest"
+   },
+   "ClientConfig": {
+    "properties": {
+     "probe_internet": {
+      "type": "boolean",
+      "title": "Probe Internet"
+     },
+     "probe_url": {
+      "type": "string",
+      "title": "Probe Url"
+     }
+    },
+    "type": "object",
+    "required": [
+     "probe_internet",
+     "probe_url"
+    ],
+    "title": "ClientConfig"
+   },
+   "ClockOut": {
+    "properties": {
+     "server_time": {
+      "type": "number",
+      "title": "Server Time"
+     }
+    },
+    "type": "object",
+    "required": [
+     "server_time"
+    ],
+    "title": "ClockOut"
+   },
+   "CodeError": {
+    "properties": {
+     "message": {
+      "type": "string",
+      "title": "Message"
+     },
+     "line": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Line",
+      "description": "Line in the hand-written code"
+     },
+     "module": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Module",
+      "description": "Index of the block module the error is about"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind",
+      "description": "blocks: breaks the block rules; code: fails the sandbox checks"
+     }
+    },
+    "type": "object",
+    "required": [
+     "message",
+     "line",
+     "module",
+     "kind"
+    ],
+    "title": "CodeError"
+   },
+   "Country": {
+    "properties": {
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "team_id": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Team Id"
+     },
+     "team_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Team Name"
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "name",
+     "team_id",
+     "team_name"
+    ],
+    "title": "Country"
+   },
+   "FairplayBatch": {
+    "properties": {
+     "events": {
+      "items": {
+       "$ref": "#/components/schemas/FairplayIn"
+      },
+      "type": "array",
+      "maxItems": 200,
+      "title": "Events"
+     }
+    },
+    "type": "object",
+    "required": [
+     "events"
+    ],
+    "title": "FairplayBatch"
+   },
+   "FairplayIn": {
+    "properties": {
+     "kind": {
+      "type": "string",
+      "maxLength": 32,
+      "title": "Kind"
+     },
+     "detail": {
+      "type": "string",
+      "maxLength": 500,
+      "title": "Detail",
+      "default": ""
+     },
+     "client_ts": {
+      "type": "number",
+      "title": "Client Ts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "kind",
+     "client_ts"
+    ],
+    "title": "FairplayIn"
+   },
+   "FairplayOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "team_id": {
+      "type": "string",
+      "title": "Team Id"
+     },
+     "team_name": {
+      "type": "string",
+      "title": "Team Name"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "detail": {
+      "type": "string",
+      "title": "Detail"
+     },
+     "client_ts": {
+      "type": "number",
+      "title": "Client Ts"
+     },
+     "server_ts": {
+      "type": "number",
+      "title": "Server Ts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "team_id",
+     "team_name",
+     "kind",
+     "detail",
+     "client_ts",
+     "server_ts"
+    ],
+    "title": "FairplayOut"
+   },
+   "GameInfo": {
+    "properties": {
+     "key": {
+      "type": "string",
+      "title": "Key"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "payoffs": {
+      "additionalProperties": {
+       "items": {
+        "type": "integer"
+       },
+       "type": "array"
+      },
+      "type": "object",
+      "title": "Payoffs"
+     }
+    },
+    "type": "object",
+    "required": [
+     "key",
+     "name",
+     "payoffs"
+    ],
+    "title": "GameInfo"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "LoginRequest": {
+    "properties": {
+     "username": {
+      "type": "string",
+      "title": "Username"
+     },
+     "password": {
+      "type": "string",
+      "title": "Password"
+     }
+    },
+    "type": "object",
+    "required": [
+     "username",
+     "password"
+    ],
+    "title": "LoginRequest"
+   },
+   "MatchOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "round_id": {
+      "type": "string",
+      "title": "Round Id"
+     },
+     "team_a": {
+      "type": "string",
+      "title": "Team A"
+     },
+     "team_b": {
+      "type": "string",
+      "title": "Team B"
+     },
+     "repetition": {
+      "type": "integer",
+      "title": "Repetition"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "score_a": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Score A"
+     },
+     "score_b": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Score B"
+     },
+     "forfeit_side": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Forfeit Side"
+     },
+     "forfeit_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Forfeit Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "round_id",
+     "team_a",
+     "team_b",
+     "repetition",
+     "status",
+     "score_a",
+     "score_b",
+     "forfeit_side",
+     "forfeit_reason"
+    ],
+    "title": "MatchOut"
+   },
+   "Mismatch": {
+    "properties": {
+     "match_id": {
+      "type": "string",
+      "title": "Match Id"
+     },
+     "team_a": {
+      "type": "string",
+      "title": "Team A"
+     },
+     "team_b": {
+      "type": "string",
+      "title": "Team B"
+     },
+     "original": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Original"
+     },
+     "recomputed": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Recomputed"
+     }
+    },
+    "type": "object",
+    "required": [
+     "match_id",
+     "team_a",
+     "team_b",
+     "original",
+     "recomputed"
+    ],
+    "title": "Mismatch"
+   },
+   "ModuleDetail": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "blocks": {
+      "type": "integer",
+      "title": "Blocks"
+     },
+     "layout": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Layout"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "code",
+     "blocks",
+     "layout"
+    ],
+    "title": "ModuleDetail"
+   },
+   "ModuleIn": {
+    "properties": {
+     "layout": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Layout",
+      "description": "Blockly workspace JSON (Blockly.serialization.workspaces.save)"
+     }
+    },
+    "type": "object",
+    "required": [
+     "layout"
+    ],
+    "title": "ModuleIn"
+   },
+   "ModuleOut": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "blocks": {
+      "type": "integer",
+      "title": "Blocks"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "code",
+     "blocks"
+    ],
+    "title": "ModuleOut"
+   },
+   "Ok": {
+    "properties": {
+     "ok": {
+      "type": "boolean",
+      "title": "Ok",
+      "default": true
+     }
+    },
+    "type": "object",
+    "title": "Ok"
+   },
+   "PenaltyIn": {
+    "properties": {
+     "round_id": {
+      "type": "string",
+      "title": "Round Id"
+     },
+     "points": {
+      "type": "integer",
+      "exclusiveMinimum": 0.0,
+      "title": "Points"
+     },
+     "reason": {
+      "type": "string",
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "round_id",
+     "points",
+     "reason"
+    ],
+    "title": "PenaltyIn"
+   },
+   "PenaltyOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "team_id": {
+      "type": "string",
+      "title": "Team Id"
+     },
+     "round_id": {
+      "type": "string",
+      "title": "Round Id"
+     },
+     "points": {
+      "type": "integer",
+      "title": "Points"
+     },
+     "reason": {
+      "type": "string",
+      "title": "Reason"
+     },
+     "created_at": {
+      "type": "number",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "team_id",
+     "round_id",
+     "points",
+     "reason",
+     "created_at"
+    ],
+    "title": "PenaltyOut"
+   },
+   "PracticeOut": {
+    "properties": {
+     "score": {
+      "type": "integer",
+      "title": "Score"
+     },
+     "opponent_score": {
+      "type": "integer",
+      "title": "Opponent Score"
+     },
+     "my_moves": {
+      "type": "string",
+      "title": "My Moves"
+     },
+     "opponent_moves": {
+      "type": "string",
+      "title": "Opponent Moves"
+     },
+     "forfeit": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Forfeit"
+     }
+    },
+    "type": "object",
+    "required": [
+     "score",
+     "opponent_score",
+     "my_moves",
+     "opponent_moves",
+     "forfeit"
+    ],
+    "title": "PracticeOut"
+   },
+   "PracticeRequest": {
+    "properties": {
+     "hand_code": {
+      "type": "string",
+      "maxLength": 50000,
+      "title": "Hand Code"
+     },
+     "modules": {
+      "items": {
+       "$ref": "#/components/schemas/ModuleIn"
+      },
+      "type": "array",
+      "maxItems": 10,
+      "title": "Modules",
+      "default": []
+     },
+     "opponent": {
+      "type": "string",
+      "title": "Opponent"
+     },
+     "game": {
+      "type": "string",
+      "title": "Game",
+      "default": "prisoners_dilemma"
+     },
+     "turns": {
+      "type": "integer",
+      "maximum": 500.0,
+      "minimum": 1.0,
+      "title": "Turns",
+      "default": 50
+     },
+     "noise": {
+      "type": "number",
+      "maximum": 0.5,
+      "minimum": 0.0,
+      "title": "Noise",
+      "default": 0.0
+     }
+    },
+    "type": "object",
+    "required": [
+     "hand_code",
+     "opponent"
+    ],
+    "title": "PracticeRequest"
+   },
+   "RefreshRequest": {
+    "properties": {
+     "refresh_token": {
+      "type": "string",
+      "title": "Refresh Token"
+     }
+    },
+    "type": "object",
+    "required": [
+     "refresh_token"
+    ],
+    "title": "RefreshRequest"
+   },
+   "ReplayOut": {
+    "properties": {
+     "match": {
+      "$ref": "#/components/schemas/MatchOut"
+     },
+     "game": {
+      "$ref": "#/components/schemas/GameInfo"
+     },
+     "moves_a": {
+      "type": "string",
+      "title": "Moves A"
+     },
+     "moves_b": {
+      "type": "string",
+      "title": "Moves B"
+     }
+    },
+    "type": "object",
+    "required": [
+     "match",
+     "game",
+     "moves_a",
+     "moves_b"
+    ],
+    "title": "ReplayOut"
+   },
+   "ReviewOut": {
+    "properties": {
+     "round": {
+      "$ref": "#/components/schemas/RoundOut"
+     },
+     "standings": {
+      "items": {
+       "$ref": "#/components/schemas/StandingOut"
+      },
+      "type": "array",
+      "title": "Standings"
+     },
+     "verification": {
+      "$ref": "#/components/schemas/VerificationReport"
+     },
+     "failed_matches": {
+      "items": {
+       "$ref": "#/components/schemas/MatchOut"
+      },
+      "type": "array",
+      "title": "Failed Matches"
+     },
+     "penalties": {
+      "items": {
+       "$ref": "#/components/schemas/PenaltyOut"
+      },
+      "type": "array",
+      "title": "Penalties"
+     },
+     "blockers": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Blockers"
+     }
+    },
+    "type": "object",
+    "required": [
+     "round",
+     "standings",
+     "verification",
+     "failed_matches",
+     "penalties",
+     "blockers"
+    ],
+    "title": "ReviewOut"
+   },
+   "RoundOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "index": {
+      "type": "integer",
+      "title": "Index"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "game": {
+      "$ref": "#/components/schemas/GameInfo"
+     },
+     "turns": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Turns",
+      "description": "None while the turn count is hidden"
+     },
+     "hide_turns": {
+      "type": "boolean",
+      "title": "Hide Turns"
+     },
+     "noise": {
+      "type": "number",
+      "title": "Noise"
+     },
+     "repetitions": {
+      "type": "integer",
+      "title": "Repetitions"
+     },
+     "keep_fraction": {
+      "type": "number",
+      "title": "Keep Fraction"
+     },
+     "keep_count": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Keep Count"
+     },
+     "block_rules": {
+      "$ref": "#/components/schemas/BlockRulesModel"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "opens_at": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Opens At"
+     },
+     "closes_at": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Closes At"
+     },
+     "paused_remaining": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Paused Remaining"
+     },
+     "window_open": {
+      "type": "boolean",
+      "title": "Window Open"
+     },
+     "matches_total": {
+      "type": "integer",
+      "title": "Matches Total"
+     },
+     "matches_done": {
+      "type": "integer",
+      "title": "Matches Done"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "index",
+     "name",
+     "game",
+     "turns",
+     "hide_turns",
+     "noise",
+     "repetitions",
+     "keep_fraction",
+     "keep_count",
+     "block_rules",
+     "status",
+     "opens_at",
+     "closes_at",
+     "paused_remaining",
+     "window_open",
+     "matches_total",
+     "matches_done"
+    ],
+    "title": "RoundOut"
+   },
+   "StandingOut": {
+    "properties": {
+     "team_id": {
+      "type": "string",
+      "title": "Team Id"
+     },
+     "team_name": {
+      "type": "string",
+      "title": "Team Name"
+     },
+     "country_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Country Code"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "penalty": {
+      "type": "integer",
+      "title": "Penalty"
+     },
+     "wins": {
+      "type": "integer",
+      "title": "Wins"
+     },
+     "losses": {
+      "type": "integer",
+      "title": "Losses"
+     },
+     "draws": {
+      "type": "integer",
+      "title": "Draws"
+     },
+     "avg_per_turn": {
+      "type": "number",
+      "title": "Avg Per Turn"
+     },
+     "rank": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rank"
+     },
+     "outcome": {
+      "type": "string",
+      "title": "Outcome"
+     },
+     "reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "team_id",
+     "team_name",
+     "country_code",
+     "total",
+     "penalty",
+     "wins",
+     "losses",
+     "draws",
+     "avg_per_turn",
+     "rank",
+     "outcome",
+     "reason"
+    ],
+    "title": "StandingOut"
+   },
+   "SubmissionDetail": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "version": {
+      "type": "integer",
+      "title": "Version"
+     },
+     "module_count": {
+      "type": "integer",
+      "title": "Module Count"
+     },
+     "rule_problems": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Rule Problems",
+      "description": "Why this version cannot play in the current round",
+      "default": []
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "errors": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Errors"
+     },
+     "test_results": {
+      "items": {
+       "$ref": "#/components/schemas/TestResult"
+      },
+      "type": "array",
+      "title": "Test Results"
+     },
+     "code_sha256": {
+      "type": "string",
+      "title": "Code Sha256"
+     },
+     "created_at": {
+      "type": "number",
+      "title": "Created At"
+     },
+     "checked_at": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Checked At"
+     },
+     "hand_code": {
+      "type": "string",
+      "title": "Hand Code"
+     },
+     "modules": {
+      "items": {
+       "$ref": "#/components/schemas/ModuleDetail"
+      },
+      "type": "array",
+      "title": "Modules"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code",
+      "description": "The assembled code that runs"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "version",
+     "module_count",
+     "status",
+     "errors",
+     "test_results",
+     "code_sha256",
+     "created_at",
+     "checked_at",
+     "hand_code",
+     "modules",
+     "code"
+    ],
+    "title": "SubmissionDetail"
+   },
+   "SubmissionOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "version": {
+      "type": "integer",
+      "title": "Version"
+     },
+     "module_count": {
+      "type": "integer",
+      "title": "Module Count"
+     },
+     "rule_problems": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Rule Problems",
+      "description": "Why this version cannot play in the current round",
+      "default": []
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "errors": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Errors"
+     },
+     "test_results": {
+      "items": {
+       "$ref": "#/components/schemas/TestResult"
+      },
+      "type": "array",
+      "title": "Test Results"
+     },
+     "code_sha256": {
+      "type": "string",
+      "title": "Code Sha256"
+     },
+     "created_at": {
+      "type": "number",
+      "title": "Created At"
+     },
+     "checked_at": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Checked At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "version",
+     "module_count",
+     "status",
+     "errors",
+     "test_results",
+     "code_sha256",
+     "created_at",
+     "checked_at"
+    ],
+    "title": "SubmissionOut"
+   },
+   "TeamOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "country_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Country Code"
+     },
+     "eliminated_in": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Eliminated In"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "country_code",
+     "eliminated_in"
+    ],
+    "title": "TeamOut"
+   },
+   "TestResult": {
+    "properties": {
+     "opponent": {
+      "type": "string",
+      "title": "Opponent"
+     },
+     "score": {
+      "type": "integer",
+      "title": "Score"
+     },
+     "opponent_score": {
+      "type": "integer",
+      "title": "Opponent Score"
+     }
+    },
+    "type": "object",
+    "required": [
+     "opponent",
+     "score",
+     "opponent_score"
+    ],
+    "title": "TestResult"
+   },
+   "TokenPair": {
+    "properties": {
+     "access_token": {
+      "type": "string",
+      "title": "Access Token"
+     },
+     "refresh_token": {
+      "type": "string",
+      "title": "Refresh Token"
+     },
+     "user": {
+      "$ref": "#/components/schemas/UserOut"
+     }
+    },
+    "type": "object",
+    "required": [
+     "access_token",
+     "refresh_token",
+     "user"
+    ],
+    "title": "TokenPair"
+   },
+   "UserOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "username": {
+      "type": "string",
+      "title": "Username"
+     },
+     "role": {
+      "type": "string",
+      "title": "Role"
+     },
+     "team": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/TeamOut"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "username",
+     "role",
+     "team"
+    ],
+    "title": "UserOut"
+   },
+   "ValidateOut": {
+    "properties": {
+     "errors": {
+      "items": {
+       "$ref": "#/components/schemas/CodeError"
+      },
+      "type": "array",
+      "title": "Errors"
+     },
+     "modules": {
+      "items": {
+       "anyOf": [
+        {
+         "$ref": "#/components/schemas/ModuleOut"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Modules",
+      "description": "One per module sent, None where it did not compile"
+     },
+     "assembled": {
+      "type": "string",
+      "title": "Assembled"
+     },
+     "rules": {
+      "$ref": "#/components/schemas/BlockRulesModel"
+     }
+    },
+    "type": "object",
+    "required": [
+     "errors",
+     "modules",
+     "assembled",
+     "rules"
+    ],
+    "title": "ValidateOut"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   },
+   "VerificationReport": {
+    "properties": {
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "done": {
+      "type": "integer",
+      "title": "Done"
+     },
+     "mismatches": {
+      "items": {
+       "$ref": "#/components/schemas/Mismatch"
+      },
+      "type": "array",
+      "title": "Mismatches"
+     }
+    },
+    "type": "object",
+    "required": [
+     "total",
+     "done",
+     "mismatches"
+    ],
+    "title": "VerificationReport"
+   },
+   "WindowExtend": {
+    "properties": {
+     "minutes": {
+      "type": "number",
+      "title": "Minutes",
+      "description": "Negative values shorten the window"
+     }
+    },
+    "type": "object",
+    "required": [
+     "minutes"
+    ],
+    "title": "WindowExtend"
+   },
+   "WindowOpen": {
+    "properties": {
+     "minutes": {
+      "type": "number",
+      "maximum": 1440.0,
+      "exclusiveMinimum": 0.0,
+      "title": "Minutes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "minutes"
+    ],
+    "title": "WindowOpen"
+   }
+  }
+ }
+}

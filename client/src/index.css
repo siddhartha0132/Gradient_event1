@@ -1,0 +1,192 @@
+@import 'tailwindcss';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/700.css';
+@import '@fontsource/special-elite/400.css';
+
+@theme {
+  --color-ink: #08090a;
+  --color-panel: #121518;
+  --color-steel: #262c33;
+  --color-steel-light: #3a424c;
+  --color-muted: #8b96a3;
+  --color-paper: #d9dde2;
+  --color-alert: #e5243b;
+  --color-alert-dim: #6b1520;
+  --color-amber: #f5a524;
+  --color-coop: #22c55e;
+  --color-peace: #4b7bec;
+
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  --font-type: 'Special Elite', 'Courier New', ui-monospace, monospace;
+}
+
+html,
+body {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  margin: 0;
+  min-height: 100vh;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse at top, rgb(229 36 59 / 0.08), transparent 60%),
+    radial-gradient(ellipse at bottom, rgb(38 44 51 / 0.5), transparent 70%);
+  background-attachment: fixed;
+}
+
+/* CRT scanlines over the whole app; pointer-events off so it never blocks clicks */
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.025) 0,
+    rgb(255 255 255 / 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+.label {
+  font-family: var(--font-type);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+.stamp {
+  font-family: var(--font-type);
+  border: 3px solid currentColor;
+  padding: 0.1em 0.5em;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  mask-image: repeating-linear-gradient(115deg, #000 0 6px, rgb(0 0 0 / 0.7) 6px 8px);
+}
+
+select,
+input,
+textarea {
+  color-scheme: dark;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-steel-light);
+}
+
+/* --- World map --- */
+.country {
+  fill: #161a1e;
+  stroke: #2b323a;
+  stroke-width: 0.5;
+  transition:
+    fill 0.3s ease,
+    stroke 0.3s ease;
+}
+.country.claimable {
+  cursor: pointer;
+}
+.country.claimable:hover {
+  fill: #3a424c;
+}
+.country.claimed {
+  stroke: #0b0c0e;
+}
+.country.mine {
+  stroke: var(--color-paper);
+  stroke-width: 1.2;
+}
+.country.fallen {
+  transition:
+    fill 2.5s ease,
+    stroke 2.5s ease,
+    opacity 2.5s ease;
+  fill: #23272c !important;
+  stroke: #1a1d21;
+  opacity: 0.55;
+}
+.country.selected {
+  fill: var(--color-amber) !important;
+}
+
+.strike {
+  fill: none;
+  stroke-linecap: round;
+  animation: strike 1.6s ease-out forwards;
+}
+@keyframes strike {
+  0% {
+    stroke-dashoffset: var(--len);
+    opacity: 1;
+  }
+  55% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.pulse {
+  animation: pulse 1.6s ease-out forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.ticker {
+  animation: ticker linear infinite;
+}
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.blink {
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* --- Blockly --- */
+/* Tailwind's reset makes every svg display:block, which defeats Blockly hiding its scrollbars with display="none" */
+.injectionDiv svg[display='none'],
+.blocklyWidgetDiv svg[display='none'] {
+  display: none;
+}
+.blocklyToolboxCategoryLabel,
+.blocklyTreeLabel {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
